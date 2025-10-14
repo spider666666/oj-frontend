@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 //导入路径，导入路径别名，默认导入的是该路径下的默认导入模块，会创建一个store实例
 import store from "@/store";
 import checkAccess from "@/access/checkAccess";
@@ -69,27 +69,29 @@ router.afterEach((to) => {
   selectKey.value = [to.path];
 });
 
-//定时修改用户登入状态
-//方法调用完要使用；结尾
-// setTimeout(() => {
-//   store.dispatch("user/getUserLogin", {
-//     userName: "CN",
-//     role: "admin",
-//   });
-// }, 300);
-
 //获取登入用户
 const loginUser = store.state.user.userLogin;
 //实现查找隐藏页面的逻辑
-const routesChoose = routes.filter((item, index) => {
-  //判断隐藏页面
-  if (item.meta?.hideInMenu) {
-    return false;
-  }
-  //判断当前用户是否有权限访问当前页面
-  if (!checkAccess(loginUser, item?.meta?.access as string)) {
-    return false;
-  }
-  return true;
+const routesChoose = computed(() => {
+  return routes.filter((item, index) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // 根据权限过滤菜单
+    if (
+      !checkAccess(store.state.user.userLogin, item?.meta?.access as string)
+    ) {
+      return false;
+    }
+    return true;
+  });
 });
+// 定时修改用户登入状态
+// 方法调用完要使用；结尾
+setTimeout(() => {
+  store.dispatch("user/getUserLogin", {
+    userName: "CN",
+    userRole: "admin",
+  });
+}, 300);
 </script>

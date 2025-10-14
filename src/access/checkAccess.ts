@@ -23,10 +23,6 @@ const checkAccess = (loginUser: any, access = ACCESSENUMS.NO_LOGIN) => {
   }
   //如果要求是管理权限，同样的操作执行
   if (access === ACCESSENUMS.ADMIN) {
-    //如果为登入，则不放行
-    if (userLoginAcess === ACCESSENUMS.NO_LOGIN) {
-      return false;
-    }
     //如果不是管理员权限，则不能访问
     if (userLoginAcess !== ACCESSENUMS.ADMIN) {
       return false;

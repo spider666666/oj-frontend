@@ -20,11 +20,11 @@ export const routes: Array<RouteRecordRaw> = [
     name: "隐藏页面",
     component: HomeView,
     meta: {
-      hideInMenu: "ture",
+      hideInMenu: true,
     },
   },
   {
-    path: "/new",
+    path: "/admin",
     name: "仅管理员可见",
     component: AdminView,
     meta: {
