@@ -8,7 +8,7 @@ export default {
     //里面保存的是对象(默认数据)
     userLogin: {
       userName: "未登入",
-      role: "noAdmin",
+      userRole: "noAdmin",
     },
   }),
   // actions
