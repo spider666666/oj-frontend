@@ -38,6 +38,5 @@
 }
 </style>
 <script setup lang="ts">
-import AboutView from "@/views/AboutView.vue";
 import GlobalHeader from "@/components/GlobalHeader.vue";
 </script>

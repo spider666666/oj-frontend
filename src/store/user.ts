@@ -3,6 +3,7 @@
 import { StoreOptions } from "vuex";
 import { UserControllerService } from "../../generated";
 import ACCESSENUMS from "@/access/accessEnums";
+import store from "@/store/index";
 
 export default {
   namespaced: true,
@@ -22,15 +23,13 @@ export default {
       const ret = await UserControllerService.getLoginUserUsingGet();
       //如果响应成功
       if (ret.code === 0) {
-        commit("updateUserLogin", ret.data); //直接返回信息即可
+        commit("updateUserLogin", ret.data); //直接返回信息即可（没有登入的时候默认返回的是null）
       } else {
         commit("updateUserLogin", {
           ...state.userLogin,
           userRole: ACCESSENUMS.NO_LOGIN,
-        });
+        }); // 没有响应默认改为未登入的状态
       }
-
-      commit("updateUserLogin", payload);
     },
   },
   //声明增删查改的方法
