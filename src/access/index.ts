@@ -10,11 +10,11 @@ router.beforeEach(async (to, from, next) => {
   console.log("当前用户信息", store.state.user.userLogin);
   const loginUser = store.state.user.userLogin;
 
-  // //如果用户之前没有登入，则实现自动登入
-  if (!loginUser || !loginUser.userRole) {
-    //调用该方法实现用户的自动登入，使用await是为了让用户在登入之后开始调用
-    await store.dispatch("user/getUserLogin");
-  }
+  // // //如果用户之前没有登入，则实现自动登入
+  // if (!loginUser || !loginUser.userRole) {
+  //   //调用该方法实现用户的自动登入，使用await是为了让用户在登入之后开始调用
+  //   await store.dispatch("user/getUserLogin");
+  // }
 
   //接下来判断当前页面是否有登入的权限
 

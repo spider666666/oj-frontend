@@ -176,7 +176,7 @@ export class UserControllerService {
   ): CancelablePromise<BaseResponse_LoginUserVO_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/user/login",
+      url: "/user/login",
       body: userLoginRequest,
       errors: {
         401: `Unauthorized`,
@@ -218,7 +218,7 @@ export class UserControllerService {
   > {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/user/logout",
+      url: "/user/logout",
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,

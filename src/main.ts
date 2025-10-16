@@ -6,5 +6,12 @@ import router from "./router";
 import store from "./store";
 import "./plugins/axios";
 import "./access/index";
+router.beforeEach((to, from) => {
+  console.log(
+    "匹配的路由:",
+    to.matched.map((record) => record.path)
+  );
+});
+
 // 在main文件中使用./作为目录名
 createApp(App).use(store).use(ArcoVue).use(router).mount("#app");
