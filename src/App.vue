@@ -10,10 +10,7 @@
   </div>
 </template>
 
-<style>
-#app {
-}
-</style>
+<style></style>
 <!--//全局文件-->
 <script setup lang="ts">
 import BasicLayout from "@/layouts/BasicLayout.vue";

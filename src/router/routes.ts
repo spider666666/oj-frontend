@@ -10,7 +10,7 @@ import UserRegisterView from "@/views/user/UserRegisterView.vue";
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "题目模块",
+    name: "浏览题目",
     component: HomeView,
   },
   {

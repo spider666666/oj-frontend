@@ -6,6 +6,8 @@ import router from "./router";
 import store from "./store";
 import "./plugins/axios";
 import "./access/index";
+// 引入全局样式，main是页面的统一入口文件
+import 'bytemd/dist/index.css'
 router.beforeEach((to, from) => {
   console.log(
     "匹配的路由:",
