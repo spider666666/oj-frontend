@@ -2,10 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PostVO } from './PostVO';
-export type BaseResponse_PostVO_ = {
-    code?: number;
-    data?: PostVO;
-    message?: string;
+export type JudgeConfig = {
+    memoryLimit?: number;
+    stackLimit?: number;
+    timeLimit?: number;
 };
 

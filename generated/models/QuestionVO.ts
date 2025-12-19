@@ -2,16 +2,21 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Post = {
+import type { JudgeConfig } from './JudgeConfig';
+import type { UserVO } from './UserVO';
+export type QuestionVO = {
+    acceptedNum?: number;
+    answer?: string;
     content?: string;
     createTime?: string;
-    favourNum?: number;
     id?: number;
     isDelete?: number;
-    tags?: string;
-    thumbNum?: number;
+    judgeConfig?: JudgeConfig;
+    submittedNum?: number;
+    tags?: Array<string>;
     title?: string;
     updateTime?: string;
     userId?: number;
+    userVO?: UserVO;
 };
 
