@@ -39,10 +39,10 @@ const handleSubmit = async () => {
     await store.dispatch("user/getUserLogin");
     alert("登入成功");
     //todo表示登入成功，直接进行页面的跳转,存在循环依赖的问题，改日解决，今天这里不是重点
-    // router.push({
-    //   path: "/",
-    //   replace: true,
-    // });
+    router.push({
+      path: "/seeQuestion",
+      replace: true,
+    });
   } else {
     ///登入失败，发送错误信息
     console.log("登入失败", ret.data);
