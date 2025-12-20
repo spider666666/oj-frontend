@@ -22,7 +22,7 @@
   box-shadow: #eee 5px 5px 4px;
 }
 #basiclayout .content {
-  background: linear-gradient(to right, #bbb, #fff);
+  background: white;
   padding: 10px;
 }
 

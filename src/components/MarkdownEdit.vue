@@ -1,5 +1,5 @@
 <template>
-    <Editor :value="props.value" :plugins="plugins"  @change="handleEditorChange"/>
+    <Editor :value="props.value" :plugins="plugins" :mode="mode" @change="handleEditorChange"/>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +15,7 @@ interface Props {
     value: string   
 }
 
+const mode = ref("split")
 // 接受参数并设置默认值
 const props = withDefaults(defineProps<Props>(), {
     value: ""
@@ -46,3 +47,5 @@ const plugins = [
 ////在当前组件中其实就是在自组件中完成了数据的编辑，只不过把数据的最终存储和管理交给了父组件
 //props是用来接受数据的，emit是用来发送数据的，于是就有了语法糖将两者结合在一起形成了v-model的双向绑定
 </script>
+<style scoped>
+</style>

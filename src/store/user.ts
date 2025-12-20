@@ -21,6 +21,7 @@ export default {
     async getUserLogin({ commit, state }, payload): Promise<void> {
       //获取登入信息
       const ret = await UserControllerService.getLoginUserUsingGet();
+      console.log("获取的登入信息为：",ret);
       //如果响应成功
       if (ret.code === 0) {
         commit("updateUserLogin", ret.data); //直接返回信息即可（没有登入的时候默认返回的是null）
