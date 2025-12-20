@@ -106,7 +106,7 @@
   
   const route = useRoute();
   // 如果页面地址包含 update，视为更新页面
-  const updatePage = route.path.includes("update");
+  const isEdit = route.query.id !== undefined;
   
   let form = ref({
     title: "",
@@ -183,7 +183,7 @@
   const doSubmit = async () => {
     console.log(form.value);
     // 区分更新还是创建
-    if (updatePage) {
+    if (isEdit) {
       const res = await QuestionControllerService.updateQuestionUsingPost(
         form.value
       );

@@ -6,12 +6,23 @@ import ACCESSENUMS from "@/access/accessEnums";
 import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
+import AddQuestionView from "@/views/Question/AddQuestionView.vue";
+import QuestionListView from "@/views/Question/QuestionListView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
-    path: "/seeQuestion",
-    name: "浏览题目",
-    component: HomeView,
+    path: "/",
+    redirect: "/add/question",
+  },
+  {
+    path: "/add/question",
+    name: "创建题目",
+    component: AddQuestionView,
+  },
+  {
+    path: "/question",
+    name: "题库",
+    component: QuestionListView,
   },
   {
     path: "/noAuth",
