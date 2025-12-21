@@ -1,5 +1,8 @@
 <template>
-    <a-table :data="data" :pagination="pagination" @change="handleTableChange" style="margin-top: 30px">
+    <a-table 
+    :data="data" 
+    :pagination="pagination"
+    @page-change="handleTableChange" style="margin-top: 30px">
         <template #columns>
             <a-table-column title="id" data-index="id"></a-table-column>
             <a-table-column title="题目" data-index="title"></a-table-column>
@@ -25,63 +28,57 @@
 
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue';
-import { QuestionControllerService } from "../../../generated";
-import { onMounted, reactive, ref } from 'vue';
+import { Page_QuestionVO_, QuestionControllerService } from "../../../generated";
+import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { QuestionQueryRequest } from '../../../generated';
 
 const show = ref(true)
-// const data = reactive([{
-//     "id": "",
-//     "title": "",
-//     "content": "",
-//     "tags": [],
-//     "answer": "",
-//     "acceptedNum": 0,
-//     "submittedNum": 0,
-//     "judgeConfig": {
-//         "timeLimit": "0",
-//         "memoryLimit": "0",
-//         "stackLimit": "0"
-//     }
-// }])
-const data = ref([])
+// 添加数据类型接口
+const data = ref<Page_QuestionVO_>()
 
-// 设置分页参数
+// 设置分页参数默认数据
 const pagination = reactive({
-    current: 0,
-    pageSize: 10,
-    total: 0,
+    showTotal: true,
+    current: 1,
+    pageSize: 1,
+    total: 0
 })
 
 //创建查询参数
-const queryParams = reactive({
-    ...pagination,
+const queryParams = reactive<QuestionQueryRequest>({
+    current :pagination.current,
+    pageSize : pagination.pageSize
 })
 
+// 或者使用下面的方法使得其变为响应式引用
+// const queryParams = reactive<QuestionQueryRequest>({
+//     // 用toRefs派生响应式引用，直接关联pagination的属性
+//     ...toRefs(pagination),
+// })
 
-//缺少权限的校验
+// 监听pagination的变化，实时同步到queryParams
+watch(pagination, (newPagination) => {
+    queryParams.current = newPagination.current;
+    queryParams.pageSize = newPagination.pageSize;
+    loadData()
+}, { deep: true }); // 深度监听对象属性变化
+
+// todo 缺少权限的校验
 const loadData = async () => {
     const res = await QuestionControllerService.listQuestionVoByPageUsingPost(queryParams);
     if(res.code === 0){
-        console.log("获取到的数据为",res);
         Message.success("查询成功")
         data.value = res.data.records
         pagination.total = res.data.total
-        console.log("赋值后的数据为：",data)
     }
     else{
         Message.error("请检查网络设置")
     }
 }
 
-const handleTableChange = (pageInfo: any) =>{
-    console.log("页面改变的信息为",pageInfo)
-  pagination.current = pageInfo.current
-  pagination.pageSize = pageInfo.pageSize
-
-  queryParams.current = pageInfo.current
-  queryParams.pageSize = pageInfo.pageSize
-  loadData();
+const handleTableChange = (page:number) =>{
+  pagination.current = page
 }
 onMounted(()=>{
     loadData();
@@ -90,7 +87,6 @@ onMounted(()=>{
 const router = useRouter()
 //书写操作栏方法
 const handleEditor = (record: any) => {
-    console.log("编辑记录为", record);
     //跳转到编辑页面
     router.push({ 
         path: "/add/question",
@@ -103,7 +99,6 @@ const handleView = (record: any) => {
     // router.push({ path: `/question/view/${record.id}` });
 };
 const handleDelete = async (record: any) => {
-    console.log("删除记录为", record);
     const res = await QuestionControllerService.deleteQuestionUsingPost({ id: record.id });
     if (res.code === 0) {
         Message.success("删除成功");
