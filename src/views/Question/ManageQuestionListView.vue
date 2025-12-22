@@ -3,14 +3,24 @@
         <template #columns>
             <a-table-column title="id" data-index="id"></a-table-column>
             <a-table-column title="题目" data-index="title"></a-table-column>
+            <a-table-column title="内容" data-index="content" tooltip></a-table-column>
             <a-table-column title="标签" data-index="tags"></a-table-column>
+            <a-table-column title="判题配置" data-index="judgeConfig" tooltip>
+                <template #cell="{ record }">
+                    {{ JSON.stringify(record.judgeConfig)}}
+                </template>
+            </a-table-column>
             <a-table-column title="通过数量" data-index="acceptedNum"></a-table-column>
             <a-table-column title="提交数量" data-index="submittedNum"></a-table-column>
+            <a-table-column title="答案" data-index="answer"></a-table-column>
             <a-table-column title="操作栏">
                 <template #cell="{ record }">
                     <div style="display: flex; gap: 8px;">
-                        <a-button type="primary" @click="handleView(record)">做题</a-button>
+                        <a-button type="primary" @click="handleEditor(record)">编辑</a-button>
+                        <a-button type="primary" @click="handleView(record)">查看</a-button>
+                        <a-button status="danger" @click="handleDelete(record)">删除</a-button>
                     </div>
+
                 </template>
             </a-table-column>
         </template>
@@ -81,10 +91,26 @@ onMounted(() => {
 
 const router = useRouter()
 //书写操作栏方法
-const handleView = (record: any) => {
-    //跳转到查看页面(注意这里使用模板语法)
+const handleEditor = (record: any) => {
+    //跳转到编辑页面
     router.push({
-        path: `/do/question/${record.id}`
-    })
+        path: "/add/question",
+        query: { id: record.id }
+    });
 };
+const handleView = (record: any) => {
+    console.log("查看记录为", record);
+    //跳转到查看页面
+    // router.push({ path: `/question/view/${record.id}` });
+};
+const handleDelete = async (record: any) => {
+    const res = await QuestionControllerService.deleteQuestionUsingPost({ id: record.id });
+    if (res.code === 0) {
+        Message.success("删除成功");
+        loadData(); //刷新数据
+    } else {
+        Message.error("删除失败，请检查网络设置");
+    }
+};
+
 </script>

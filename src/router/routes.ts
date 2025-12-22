@@ -7,7 +7,10 @@ import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AddQuestionView from "@/views/Question/AddQuestionView.vue";
+import ManageQuestionListView from "@/views/Question/ManageQuestionListView.vue";
 import QuestionListView from "@/views/Question/QuestionListView.vue";
+import DoQuestionView from "@/views/Question/DoQuestionView.vue";
+
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -20,23 +23,35 @@ export const routes: Array<RouteRecordRaw> = [
     component: AddQuestionView,
   },
   {
+    path: "/do/question",
+    name: "在线做题",
+    component: QuestionListView,
+    
+  },
+  {
+    path: "/do/question/:id",
+    name: "在线做题详情",
+    component:DoQuestionView,
+    props: true
+  },
+  {
     path: "/question",
     name: "题库",
-    component: QuestionListView,
+    component: ManageQuestionListView,
   },
-  {
-    path: "/noAuth",
-    name: "无权限",
-    component: noAuth,
-  },
-  {
-    path: "/hide",
-    name: "隐藏页面",
-    component: HomeView,
-    meta: {
-      hideInMenu: true,
-    },
-  },
+  // {
+  //   path: "/noAuth",
+  //   name: "无权限",
+  //   component: noAuth,
+  // },
+  // {
+  //   path: "/hide",
+  //   name: "隐藏页面",
+  //   component: HomeView,
+  //   meta: {
+  //     hideInMenu: true,
+  //   },
+  // },
   {
     path: "/user",
     name: "用户",
@@ -57,14 +72,14 @@ export const routes: Array<RouteRecordRaw> = [
       hideInMenu: true,
     },
   },
-  {
-    path: "/admin",
-    name: "仅管理员可见",
-    component: AdminView,
-    meta: {
-      access: ACCESSENUMS.ADMIN,
-    },
-  },
+  // {
+  //   path: "/admin",
+  //   name: "仅管理员可见",
+  //   component: AdminView,
+  //   meta: {
+  //     access: ACCESSENUMS.ADMIN,
+  //   },
+  // },
   {
     path: "/about",
     name: "判题模块",
